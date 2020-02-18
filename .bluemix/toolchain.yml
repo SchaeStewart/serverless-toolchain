@@ -63,5 +63,6 @@ form:
   pipeline:
     parameters:
       prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
+      test-command: '{{services.sample-repo.parameters.test-command}}'
     schema:
       $ref: deploy.json
