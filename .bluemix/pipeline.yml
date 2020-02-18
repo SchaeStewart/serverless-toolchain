@@ -1,5 +1,30 @@
 ---
 stages:
+- name: test
+  inputs:
+  - type: git
+    branch: master
+    service: ${SAMPLE_REPO} 
+  triggers:
+  - type: commit
+  properties:
+  - name: TEST_COMMAND
+    type: text
+    value: ${TEST_COMMAND}
+  # - name: TEST_DIRECTORY
+  #   type: text
+  #   value: ${TEST_DIRECTORY}
+  jobs:
+  - name: Test
+    type: tester
+    curatedDockerImage: default
+    script: |
+      #!/bin/bash
+
+      echo "Running tests"
+
+      ${TEST_COMMAND}
+    test_type: simple
 - name: deploy
   inputs:
   - type: git
