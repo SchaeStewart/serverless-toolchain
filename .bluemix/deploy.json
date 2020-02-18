@@ -46,6 +46,7 @@
             },
             "type": "string",
             "pattern": "\\S"
+        }
     },
     "required": [
         "prod-region",
