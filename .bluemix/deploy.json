@@ -78,6 +78,14 @@
             "key": "api-key"
         },
         {
+            "type": "text",
+            "readonly": false,
+            "title": {
+                "$ref": "#/messages/deploy.testCommand"
+            },
+            "key": "test-command"
+        },
+        {
             "type": "table",
             "columnCount": 4,
             "widths": [
