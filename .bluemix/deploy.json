@@ -39,14 +39,21 @@
             },
             "type": "string",
             "pattern": "\\S"
-        }
+        },
+        "test-command": {
+            "description": {
+                "$ref": "#/message/deploy.testCommandDescription"
+            },
+            "type": "string",
+            "pattern": "\\S"
     },
     "required": [
         "prod-region",
         "prod-organization",
         "prod-space",
         "prod-app-name",
-        "api-key"
+        "api-key",
+        "test-command"
     ],
     "form": [
         {
