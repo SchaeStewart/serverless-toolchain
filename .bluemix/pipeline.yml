@@ -43,7 +43,14 @@ stages:
       echo "API_KEY=${API_KEY}"
       echo "PROD_ORG_NAME=${PROD_ORG_NAME}"
       echo "PROD_SPACE_NAME=${PROD_SPACE_NAME}"
-      bx login -a https://api.ng.bluemix.net --apikey ${API_KEY} -o ${PROD_ORG_NAME} -s ${PROD_SPACE_NAME}
+
+      echo bx login -a https://cloud.ibm.com --apikey ${API_KEY}
+      bx login -a https://cloud.ibm.com --apikey ${API_KEY} -r ${API_REGION}
+
+      echo bx target -o ${PROD_ORG_NAME} -s ${PROD_SPACE_NAME}
+      bx target -o ${PROD_ORG_NAME} -s ${PROD_SPACE_NAME}
+
+      echo bx wsk action invoke /whisk.system/utils/echo -p message hello --blocking --result
       bx wsk action invoke /whisk.system/utils/echo -p message hello --blocking --result
       # now set up your actions etc
       for i in `find actions -type f \( -name "*.js" -or -name "*.py" \)` ; do
@@ -51,7 +58,7 @@ stages:
         type=`echo $file | cut -d "." -f 2`
         name=`echo $file | cut -d "." -f 1`
         if [ $type == "js" ] ; then
-          kind="nodejs:8"
+          kind="nodejs:10"
         else
           kind="python:3"
         fi
