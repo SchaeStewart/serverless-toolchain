@@ -47,6 +47,7 @@ services:
           PROD_ORG_NAME: '{{form.pipeline.parameters.prod-organization}}'
           PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
           API_KEY: '{{form.pipeline.parameters.api-key}}'
+          TEST_COMMAND: '{{form.pipeline.parameters.test-command}}'
         execute: true
   servicenow:
     service_id: customtool
