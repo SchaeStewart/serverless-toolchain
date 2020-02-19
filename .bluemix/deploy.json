@@ -39,6 +39,11 @@
             },
             "type": "string",
             "pattern": "\\S"
+        },
+        "test-command": {
+            "description": "The command to run your test suite",
+            "type": "string",
+            "pattern": "\\S"
         }
     },
     "required": [
@@ -68,6 +73,14 @@
               "$ref": "#/messages/deploy.apikey"
             },
             "key": "api-key"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": {
+              "$ref": "#/messages/deploy.testCommand"
+            },
+            "key": "test-command"
         },
         {
             "type": "table",
