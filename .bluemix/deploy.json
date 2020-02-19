@@ -39,13 +39,6 @@
             },
             "type": "string",
             "pattern": "\\S"
-        },
-        "test-command": {
-            "description": {
-                "$ref": "#/message/deploy.testCommandDescription"
-            },
-            "type": "string",
-            "pattern": "\\S"
         }
     },
     "required": [
@@ -53,8 +46,7 @@
         "prod-organization",
         "prod-space",
         "prod-app-name",
-        "api-key",
-        "test-command"
+        "api-key"
     ],
     "form": [
         {
@@ -76,14 +68,6 @@
               "$ref": "#/messages/deploy.apikey"
             },
             "key": "api-key"
-        },
-        {
-            "type": "text",
-            "readonly": false,
-            "title": {
-                "$ref": "#/messages/deploy.testCommand"
-            },
-            "key": "test-command"
         },
         {
             "type": "table",
