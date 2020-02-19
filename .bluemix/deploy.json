@@ -41,7 +41,7 @@
             "pattern": "\\S"
         },
         "test-command": {
-            "description": "The command to run your test suite",
+            "description": "The bash command to run your test suite",
             "type": "string",
             "pattern": "\\S"
         }
