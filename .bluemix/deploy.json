@@ -44,6 +44,11 @@
             "description": "The bash command to run your test suite",
             "type": "string",
             "pattern": "\\S"
+        },
+        "gh-api-key": {
+            "description": "A GitHub apikey for your repo",
+            "type": "string",
+            "pattern": "\\S"
         }
     },
     "required": [
@@ -81,6 +86,12 @@
               "$ref": "#/messages/deploy.testCommand"
             },
             "key": "test-command"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "GitHub API Key",
+            "key": "gh-api-key"
         },
         {
             "type": "table",

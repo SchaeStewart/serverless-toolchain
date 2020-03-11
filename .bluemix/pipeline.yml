@@ -29,6 +29,7 @@ stages:
 
       echo "Running tests"
       ${TEST_COMMAND}
+      # TODO: if command successful, create PR using Dan's stuff, create ticket on github
     test_type: simple
   - name: FaaS Deploy
     type: deployer
