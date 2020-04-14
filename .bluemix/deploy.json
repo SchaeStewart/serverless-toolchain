@@ -49,6 +49,16 @@
             "description": "A GitHub apikey for your repo",
             "type": "string",
             "pattern": "\\S"
+        },
+        "gh-username": {
+            "description": "A GitHub user who has access to your repo. This user will create Pull Requests",
+            "type": "string",
+            "pattern": "\\S"
+        },
+        "gh-repo": {
+            "description": "Your GitHub repo. EX: john-smith/my-repo-name",
+            "type": "string",
+            "pattern": "\\S"
         }
     },
     "required": [
@@ -92,6 +102,18 @@
             "readonly": false,
             "title": "GitHub API Key",
             "key": "gh-api-key"
+        },
+         {
+            "type": "text",
+            "readonly": false,
+            "title": "GitHub API Key",
+            "key": "gh-username"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "GitHub Repo Name",
+            "key": "gh-repo"
         },
         {
             "type": "table",
