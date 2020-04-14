@@ -26,6 +26,7 @@ stages:
     curratedDockerImage: default
     script: |
       #!/bin/bash
+      echo $SAMPLE_REPO
       function createPR () {
         if [ -z $GH_API_KEY ]
         then

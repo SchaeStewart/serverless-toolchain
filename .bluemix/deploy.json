@@ -106,7 +106,7 @@
          {
             "type": "text",
             "readonly": false,
-            "title": "GitHub Username",
+            "title": "GitHub Usernamet",
             "key": "gh-username"
         },
         {
