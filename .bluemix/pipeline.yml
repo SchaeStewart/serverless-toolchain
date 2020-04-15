@@ -30,16 +30,13 @@ stages:
       function createPR () {
         if [ -z $GH_API_KEY ]
         then
-          branch_name="$(date +%Y%m%d.%H%M%S)"
+          git config --global user.email $PIPELINE_TRIGGERING_USER
+          git config --global user.name "Serverless Toolchain"
           user_name=$GH_USERNAME
           token=$GH_API_KEY
-          repo=${${GIT_URLS}//https:\/\/github.com\/}
-          git checkout -b pr/${branch_name}
-          git add .
-          git commit -m "${branch_name}"
-          git push -u https://${user_name}:${token}@github.com/${repo}.git
+          repo=${GIT_URLS#'https://github.com/'}
           curl -X POST -H "Content-Type: application/json" -d \
-          '{"title":"'"$branch_name"'", "body":"'"$branch_name"'", "head":"'"pr/$branch_name"'", "base":"master"}' \
+          '{"title":"Merge Stage to Master", "body":"This PR was created by the Serverless Toolchain", "head":"stage", "base":"master"}' \
           https://${user_name}:${token}@api.github.com/repos/${repo}/pulls
         fi
       }
