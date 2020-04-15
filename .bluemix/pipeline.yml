@@ -1,9 +1,9 @@
 ---
 stages:
-- name: deploy
+- name: Test stage branch, deploy, and create PR
   inputs:
   - type: git
-    branch: master
+    branch: stage
     service: ${SAMPLE_REPO}
   triggers:
   - type: commit
@@ -54,6 +54,60 @@ stages:
       fi
     test_type: simple
   - name: Deploy to stage
+    type: deployer
+    target:
+      region_id: ${PROD_REGION_ID}
+      organization: ${PROD_ORG_NAME}
+      space: ${PROD_SPACE_NAME}
+      application: ${CF_APP_NAME}
+      api_key: ${API_KEY}
+    script: |
+      #!/bin/bash
+      echo "API_KEY=${API_KEY}"
+      echo "PROD_ORG_NAME=${PROD_ORG_NAME}"
+      echo "PROD_SPACE_NAME=${PROD_SPACE_NAME}"
+
+      echo bx login -a https://cloud.ibm.com --apikey ${API_KEY}
+      bx login -a https://cloud.ibm.com --apikey ${API_KEY} -r ${API_REGION}
+
+      echo bx target -o ${PROD_ORG_NAME} -s ${PROD_SPACE_NAME}
+      bx target -o ${PROD_ORG_NAME} -s ${PROD_SPACE_NAME}
+
+      echo bx wsk action invoke /whisk.system/utils/echo -p message hello --blocking --result
+      bx wsk action invoke /whisk.system/utils/echo -p message hello --blocking --result
+      # now set up your actions etc
+      for i in `find actions -type f \( -name "*.js" -or -name "*.py" \)` ; do
+        file=`echo $i | cut -d "/" -f 2`
+        type=`echo $file | cut -d "." -f 2`
+        name=`echo $file | cut -d "." -f 1`
+        if [ $type == "js" ] ; then
+          kind="nodejs:10"
+        else
+          kind="python:3"
+        fi
+        bx wsk action update ${name}-stage --kind $kind $i
+      done 
+      # check everything is as expected
+      bx wsk action list
+- name: Deploy to master
+  inputs:
+  - type: git
+    branch: master
+    service: ${SAMPLE_REPO}
+  triggers:
+  - type: commit
+  properties:
+  - name: API_KEY
+    type: text
+    value: ${API_KEY}
+  - name: PROD_ORG_NAME
+    type: text
+    value: ${PROD_ORG_NAME}
+  - name: PROD_SPACE_NAME
+    type: text
+    value: ${PROD_SPACE_NAME}
+  jobs:
+  - name: Deploy to master
     type: deployer
     target:
       region_id: ${PROD_REGION_ID}

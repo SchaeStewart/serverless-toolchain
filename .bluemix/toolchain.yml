@@ -9,7 +9,7 @@ template:
   header: '![](toolchain.svg?localize)'
   icon: icon.svg
   required:
-    - sample-build
+    - stage-build
     - sample-repo
   info:
     git url: >-
@@ -30,7 +30,7 @@ services:
       type: clone
       has_issues: true
       enable_traceability: true
-  sample-build:
+  stage-build:
     service_id: pipeline
     parameters:
       services:
@@ -48,20 +48,10 @@ services:
           PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
           API_KEY: '{{form.pipeline.parameters.api-key}}'
           TEST_COMMAND: '{{form.pipeline.parameters.test-command}}'
-          GH_API_KEY: '{{form.pipeline.parameters.gh-api-key}}'
+          GH_API_KEY: '{{form.pipeline.parameters.gh-access-token}}'
           GH_USERNAME: '{{form.pipeline.parameters.gh-username}}'
           GH_REPO: '{{form.pipeline.parameters.gh-repo}}'
         execute: true
-  # servicenow:
-  #   service_id: customtool
-  #   parameters:
-  #     type: ServiceNow
-  #     lifecyclePhase: "MANAGE"
-  #     imageUrl: "https://cms3prod.service-now.com/favicon.ico"
-  #     documentationUrl: "https://docs.servicenow.com"
-  #     name: "ServiceNow"
-  #     dashboard_url: "https://cms3prod.service-now.com/"
-  #     description: "ServiceNow"
   messaging:
     service_id: slack
     $ref: slack.yml

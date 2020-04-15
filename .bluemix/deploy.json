@@ -45,18 +45,13 @@
             "type": "string",
             "pattern": "\\S"
         },
-        "gh-api-key": {
+        "gh-access-token": {
             "description": "A GitHub access token for your repo",
             "type": "string",
             "pattern": "\\S"
         },
         "gh-username": {
             "description": "A GitHub user who has access to your repo. This user will create Pull Requests",
-            "type": "string",
-            "pattern": "\\S"
-        },
-        "gh-repo": {
-            "description": "Your GitHub repo. EX: john-smith/my-repo-name",
             "type": "string",
             "pattern": "\\S"
         }
@@ -101,7 +96,7 @@
             "type": "text",
             "readonly": false,
             "title": "GitHub Access Key",
-            "key": "gh-api-key"
+            "key": "gh-access-token"
         },
          {
             "type": "text",
