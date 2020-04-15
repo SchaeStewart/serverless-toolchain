@@ -26,18 +26,18 @@ stages:
     curratedDockerImage: default
     script: |
       #!/bin/bash
-      echo $SAMPLE_REPO
       function createPR () {
-        if [ -z $GH_API_KEY ]
+        if [ -v GH_API_KEY ]
         then
           git config --global user.email $PIPELINE_TRIGGERING_USER
           git config --global user.name "Serverless Toolchain"
           user_name=$GH_USERNAME
           token=$GH_API_KEY
           repo=${GIT_URLS#'https://github.com/'}
-          curl -X POST -H "Content-Type: application/json" -d \
+          repo=${repo/'.git'}
+          curl -X POST -H "Content-Type: application/json" -H "Authorization: token GH_API_KEY" -d \
           '{"title":"Merge Stage to Master", "body":"This PR was created by the Serverless Toolchain", "head":"stage", "base":"master"}' \
-          https://${user_name}:${token}@api.github.com/repos/${repo}/pulls
+          https://api.github.com/repos/${repo}/pulls
         fi
       }
 
