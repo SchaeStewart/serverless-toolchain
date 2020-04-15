@@ -50,7 +50,6 @@ services:
           TEST_COMMAND: '{{form.pipeline.parameters.test-command}}'
           GH_API_KEY: '{{form.pipeline.parameters.gh-access-token}}'
           GH_USERNAME: '{{form.pipeline.parameters.gh-username}}'
-          GH_REPO: '{{form.pipeline.parameters.gh-repo}}'
         execute: true
   messaging:
     service_id: slack

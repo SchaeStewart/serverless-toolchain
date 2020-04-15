@@ -105,12 +105,6 @@
             "key": "gh-username"
         },
         {
-            "type": "text",
-            "readonly": false,
-            "title": "GitHub Repo Name",
-            "key": "gh-repo"
-        },
-        {
             "type": "table",
             "columnCount": 4,
             "widths": [
