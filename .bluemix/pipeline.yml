@@ -17,6 +17,9 @@ stages:
   - name: PROD_SPACE_NAME
     type: text
     value: ${PROD_SPACE_NAME}
+  - name: PROD_REGION 
+    type: text
+    value: ${PROD_REGION_ID}
   - name: TEST_COMMAND
     type: text
     value: ${TEST_COMMAND}
