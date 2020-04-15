@@ -33,7 +33,7 @@ stages:
           branch_name="$(date +%Y%m%d.%H%M%S)"
           user_name=$GH_USERNAME
           token=$GH_API_KEY
-          repo=$GH_REPO
+          repo=${${GIT_URLS}//https:\/\/github.com\/}
           git checkout -b pr/${branch_name}
           git add .
           git commit -m "${branch_name}"
