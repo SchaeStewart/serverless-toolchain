@@ -17,7 +17,7 @@ stages:
   - name: PROD_SPACE_NAME
     type: text
     value: ${PROD_SPACE_NAME}
-  - name: PROD_REGION 
+  - name: PROD_REGION_ID
     type: text
     value: ${PROD_REGION_ID}
   - name: TEST_COMMAND
@@ -41,7 +41,7 @@ stages:
           token=$GH_API_KEY
           repo=${GIT_URLS#'https://github.com/'}
           repo=${repo/'.git'}
-          curl -X POST -H "Content-Type: application/json" -H "Authorization: token GH_API_KEY" -d \
+          curl -X POST -H "Content-Type: application/json" -H "Authorization: token $GH_API_KEY" -d \
           '{"title":"Merge Stage to Master", "body":"This PR was created by the Serverless Toolchain", "head":"stage", "base":"master"}' \
           https://api.github.com/repos/${repo}/pulls
         fi
