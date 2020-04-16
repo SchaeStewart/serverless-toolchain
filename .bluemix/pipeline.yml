@@ -32,18 +32,31 @@ stages:
     curratedDockerImage: default
     script: |
       #!/bin/bash
+      repo=${GIT_URLS#'https://github.com/'}
+      repo=${repo/'.git'}
+
       function createPR () {
         if [ -v GH_API_KEY ]
         then
-          git config --global user.email $PIPELINE_TRIGGERING_USER
-          git config --global user.name "Serverless Toolchain"
           user_name=$GH_USERNAME
           token=$GH_API_KEY
-          repo=${GIT_URLS#'https://github.com/'}
-          repo=${repo/'.git'}
           curl -X POST -H "Content-Type: application/json" -H "Authorization: token $GH_API_KEY" -d \
           '{"title":"Merge Stage to Master", "body":"This PR was created by the Serverless Toolchain", "head":"stage", "base":"master"}' \
           https://api.github.com/repos/${repo}/pulls
+        fi
+      }
+
+      function createIssue () {
+        if [ -v GH_API_KEY ]
+        then
+          curl -X "POST" "https://api.github.com/repos/$repo/issues?state=all" \
+          -H "Cookie: logged_in=no" \
+          -H "Authorization: token ${GH_API_KEY}" \
+          -H "Content-Type: text/plain; charset=utf-8" \
+          -d $'{
+          "title": "Serverless toolchain tests did not pass",
+          "body": "Tests failed on Stage branch",
+          }'
         fi
       }
 
@@ -51,9 +64,11 @@ stages:
       ${TEST_COMMAND}
       if test $? -eq 0 
       then
+        echo "Creating PR"
         createPR
       else
         echo "Tests failed"
+        createIssue
       fi
     test_type: simple
   - name: Deploy to stage
