@@ -70,9 +70,10 @@ stages:
       echo "PROD_ORG_NAME=${PROD_ORG_NAME}"
       echo "PROD_SPACE_NAME=${PROD_SPACE_NAME}"
       echo "PROD_REGION_ID=${PROD_REGION_ID}"
+      region=$(cut -d ':' -f3 <<< "$PROD_REGION_ID")
 
-      echo bx login -a https://cloud.ibm.com --apikey ${API_KEY}
-      bx login -a https://cloud.ibm.com --apikey ${API_KEY} -r ${PROD_REGION_ID}
+      echo bx login -a https://cloud.ibm.com --apikey ${API_KEY} -r $region
+      bx login -a https://cloud.ibm.com --apikey ${API_KEY} -r $region
 
       echo bx target -o ${PROD_ORG_NAME} -s ${PROD_SPACE_NAME}
       bx target -o ${PROD_ORG_NAME} -s ${PROD_SPACE_NAME}
@@ -110,6 +111,15 @@ stages:
   - name: PROD_SPACE_NAME
     type: text
     value: ${PROD_SPACE_NAME}
+  - name: PROD_REGION_ID
+    type: text
+    value: ${PROD_REGION_ID}
+  - name: TEST_COMMAND
+    type: text
+    value: ${TEST_COMMAND}
+  - name: GH_API_KEY
+    type: text
+    value: ${GH_API_KEY}
   jobs:
   - name: Deploy to master
     type: deployer
@@ -124,9 +134,11 @@ stages:
       echo "API_KEY=${API_KEY}"
       echo "PROD_ORG_NAME=${PROD_ORG_NAME}"
       echo "PROD_SPACE_NAME=${PROD_SPACE_NAME}"
+      echo "PROD_REGION_ID=${PROD_REGION_ID}"
+      region=$(cut -d ':' -f3 <<< "$PROD_REGION_ID")
 
-      echo bx login -a https://cloud.ibm.com --apikey ${API_KEY}
-      bx login -a https://cloud.ibm.com --apikey ${API_KEY} -r ${API_REGION}
+      echo bx login -a https://cloud.ibm.com --apikey ${API_KEY} -r $region
+      bx login -a https://cloud.ibm.com --apikey ${API_KEY} -r $region
 
       echo bx target -o ${PROD_ORG_NAME} -s ${PROD_SPACE_NAME}
       bx target -o ${PROD_ORG_NAME} -s ${PROD_SPACE_NAME}
@@ -143,7 +155,7 @@ stages:
         else
           kind="python:3"
         fi
-        bx wsk action update $name --kind $kind $i
+        bx wsk action update ${name} --kind $kind $i
       done 
       # check everything is as expected
       bx wsk action list
