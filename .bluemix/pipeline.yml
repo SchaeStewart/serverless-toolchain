@@ -23,6 +23,9 @@ stages:
   - name: TEST_COMMAND
     type: text
     value: ${TEST_COMMAND}
+  - name: TEST_SETUP_COMMAND
+    type: text
+    value: ${TEST_SETUP_COMMAND}
   - name: GH_API_KEY
     type: text
     value: ${GH_API_KEY}
@@ -61,6 +64,7 @@ stages:
       }
 
       echo "Running tests"
+      ${TEST_SETUP_COMMAND}
       ${TEST_COMMAND}
       if test $? -eq 0 
       then
@@ -69,6 +73,7 @@ stages:
       else
         echo "Tests failed"
         createIssue
+        exit 1
       fi
     test_type: simple
   - name: Deploy to stage

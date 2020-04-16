@@ -48,6 +48,7 @@ services:
           PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
           API_KEY: '{{form.pipeline.parameters.api-key}}'
           TEST_COMMAND: '{{form.pipeline.parameters.test-command}}'
+          TEST_SETUP_COMMAND: '{{form.pipeline.parameters.test-setup-command}}'
           GH_API_KEY: '{{form.pipeline.parameters.gh-access-token}}'
           GH_USERNAME: '{{form.pipeline.parameters.gh-username}}'
         execute: true

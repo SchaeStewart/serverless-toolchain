@@ -40,6 +40,11 @@
             "type": "string",
             "pattern": "\\S"
         },
+        "test-setup-command": {
+            "description": "The bash command to setup your test suite",
+            "type": "string",
+            "pattern": "\\S"
+        },
         "test-command": {
             "description": "The bash command to run your test suite",
             "type": "string",
@@ -83,6 +88,12 @@
               "$ref": "#/messages/deploy.apikey"
             },
             "key": "api-key"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Test Setup Command",
+            "key": "test-setup-command"
         },
         {
             "type": "text",
