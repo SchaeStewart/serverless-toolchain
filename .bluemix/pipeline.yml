@@ -41,7 +41,6 @@ stages:
       function createPR () {
         if [ -v GH_API_KEY ]
         then
-          user_name=$GH_USERNAME
           token=$GH_API_KEY
           curl -X POST -H "Content-Type: application/json" -H "Authorization: token $GH_API_KEY" -d \
           '{"title":"Merge Stage to Master", "body":"This PR was created by the Serverless Toolchain", "head":"stage", "base":"master"}' \
@@ -56,15 +55,14 @@ stages:
           -H "Cookie: logged_in=no" \
           -H "Authorization: token ${GH_API_KEY}" \
           -H "Content-Type: text/plain; charset=utf-8" \
-          -d $'{
-          "title": "Serverless toolchain tests did not pass",
-          "body": "Tests failed on Stage branch",
-          }'
+          -d
+          '{ "title": "Serverless toolchain tests did not pass", "body": "Tests failed on Stage branch"}'
         fi
       }
 
       echo "Running tests"
       ${TEST_SETUP_COMMAND}
+      set +e
       ${TEST_COMMAND}
       if test $? -eq 0 
       then

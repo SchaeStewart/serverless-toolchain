@@ -54,11 +54,6 @@
             "description": "A GitHub access token for your repo",
             "type": "string",
             "pattern": "\\S"
-        },
-        "gh-username": {
-            "description": "A GitHub user who has access to your repo. This user will create Pull Requests",
-            "type": "string",
-            "pattern": "\\S"
         }
     },
     "required": [
@@ -104,16 +99,10 @@
             "key": "test-command"
         },
         {
-            "type": "text",
+            "type": "password",
             "readonly": false,
             "title": "GitHub Access Key",
             "key": "gh-access-token"
-        },
-         {
-            "type": "text",
-            "readonly": false,
-            "title": "GitHub Username",
-            "key": "gh-username"
         },
         {
             "type": "table",
