@@ -60,6 +60,8 @@ stages:
       }
 
       echo "Running tests"
+      cd test
+      npm install
       ${TEST_SETUP_COMMAND}
       set +e
       ${TEST_COMMAND}
